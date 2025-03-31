@@ -7,9 +7,10 @@ import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { addCat } from '@/store/features/cats/catsSlice';
 import type { Cat } from '@/types';
 import { validateForm } from '@/utils/validation';
+import type { AppDispatch } from '@/store';
 
 export default function CreateCatPage() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',

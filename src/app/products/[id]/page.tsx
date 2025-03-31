@@ -52,7 +52,7 @@ export default function CatDetailsPage() {
             {cat.breeds[0]?.description || 'Нет описания'}
           </Typography>
           <Typography variant="body2">
-            <strong>Темперамент:</strong> {cat.breeds[0]?.temperament || 'Неизвестно'}
+            <strong>Темперамент:</strong> {cat.temperament || 'Неизвестно'}
           </Typography>
           <Typography variant="body2">
             <strong>Происхождение:</strong> {cat.breeds[0]?.origin || 'Неизвестно'}
