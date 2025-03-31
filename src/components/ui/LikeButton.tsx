@@ -4,9 +4,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useDispatch } from 'react-redux';
 import { toggleFavorites } from '@/store/features/cats/catsSlice';
+import type { Cat } from '@/types';
 
 interface LikeButtonProps {
-  catId: string;
+  catItem: Cat;
 }
 
 export const LikeButton: React.FC<LikeButtonProps> = ({ catItem }) => {

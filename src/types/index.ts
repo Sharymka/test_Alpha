@@ -1,14 +1,18 @@
 export interface CatBreed {
   name: string;
   origin: string;
+  description: string;
 }
+
 
 export interface Cat {
   id: string;
   url: string;
   width: number;
   height: number;
+  temperament: string[];
   breeds: CatBreed[];
+  isFavorite?: boolean;
 }
 
 export interface CatsState {
@@ -16,4 +20,5 @@ export interface CatsState {
   favorites: Cat[];
   loading: boolean;
   error: string | null;
+  isInitialized: boolean;
 }

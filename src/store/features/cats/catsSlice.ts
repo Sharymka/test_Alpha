@@ -6,7 +6,8 @@ const initialState: CatsState = {
   items: [],
   favorites: [],
   loading: false,
-  error: null
+  error: null,
+  isInitialized: false
 };
 
 export const catsSlice = createSlice({
@@ -25,10 +26,8 @@ export const catsSlice = createSlice({
       const isFavorites = state.favorites.some((favorite) => cat.id === favorite.id);
 
       if (isFavorites) {
-        console.log(' isFavorites true', cat);
         state.favorites = state.favorites.filter((favorite) => favorite.id !== cat.id);
       } else {
-        console.log(' push cat', cat);
         state.favorites.push(cat);
       }
     }
@@ -42,8 +41,8 @@ export const catsSlice = createSlice({
       })
       .addCase(fetchCats.fulfilled, (state, action) => {
         state.items = action.payload;
-        console.log(' state.items', state.items);
         state.loading = false;
+        state.isInitialized = true;
       })
       .addCase(fetchCats.rejected, (state, action) => {
         state.loading = false;

@@ -23,14 +23,16 @@ import { useRouter } from 'next/navigation';
 
 export default function ProductsPage() {
   const dispatch = useDispatch<AppDispatch>();
-  const { items, favorites, loading, error } = useSelector((state: RootState) => state.cats) as CatsState;
+  const { items, favorites, loading, error, isInitialized } = useSelector((state: RootState) => state.cats) as CatsState;
   const [showFavorites, setShowFavorites] = useState(false);
   const router = useRouter();
   const catsToShow = showFavorites ? favorites: items;
 
   useEffect(() => {
-    dispatch(fetchCats());
-  }, [dispatch]);
+    if (!isInitialized) {
+      dispatch(fetchCats());
+    }
+  }, [dispatch, isInitialized]);
 
   const handleDelete = (catId: string) => {
     dispatch(deleteCat(catId));
@@ -58,22 +60,21 @@ export default function ProductsPage() {
         Каталог котов
       </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3, gap: 2 }}>
-      <Button 
+        <Button 
           variant="contained" 
-          onClick={() =>router.push('/create-product')}
+          onClick={() => router.push('/create-product')}
           sx={{ bgcolor: 'grey.500', '&:hover': { bgcolor: 'grey.400' } }}
         >
           Добавить
         </Button>
         <Button 
           variant="contained" 
-          onClick={() =>setShowFavorites(!showFavorites)}
+          onClick={() => setShowFavorites(!showFavorites)}
           sx={{ bgcolor: 'grey.500', '&:hover': { bgcolor: 'grey.400' } }}
         >
-         {showFavorites? 'Все коты':'Избранные коты'}
+          {showFavorites ? 'Все коты' : 'Избранные коты'}
         </Button>
       </Box>
-
       <Grid container spacing={4}>
         {catsToShow.map((cat) => (
           <Box key={cat.id} sx={{ width: '100%', margin: '0 auto' }} onClick={() => router.push(`/products/${cat.id}`)}>
@@ -89,7 +90,7 @@ export default function ProductsPage() {
                   {cat.breeds[0]?.name || 'Unknown Breed'}
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
-                Происхождение: {cat.breeds[0]?.origin || 'Unknown'}
+                  Происхождение: {cat.breeds[0]?.origin || 'Unknown'}
                 </Typography>
                 <Box mt={2}>
                   <Typography variant="body2">
@@ -100,8 +101,8 @@ export default function ProductsPage() {
                   </Typography>
                 </Box>
                 <Box mt="auto" display="flex" justifyContent="flex-end" gap={1}>
-                  <LikeButton catItem={cat} />
-                  <DeleteButton catId={cat.id} onDelete={handleDelete} />
+                   <LikeButton catItem={cat} />
+                  <DeleteButton catId={cat.id} onDelete={handleDelete}/>
                 </Box>
               </CardContent>
             </Card>
