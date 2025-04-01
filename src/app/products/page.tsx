@@ -11,22 +11,37 @@ import {
   Container,
   Box,
   CircularProgress,
-  Button
+  Button,
+  Pagination,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  SelectChangeEvent
 } from '@mui/material';
 import type { RootState, AppDispatch } from '@/store';
 import type { Cat, CatsState } from '@/types';
 import { fetchCats } from '@/store/features/cats/catsApi';
-import { deleteCat } from '@/store/features/cats/catsSlice';
+import { deleteCat, setCurrentPage, setItemsPerPage } from '@/store/features/cats/catsSlice';
 import { LikeButton } from '@/components/ui/LikeButton';
 import { DeleteButton } from '@/components/ui/DeleteButton';
 import { useRouter } from 'next/navigation';
 
 export default function ProductsPage() {
   const dispatch = useDispatch<AppDispatch>();
-  const { items, favorites, loading, error, isInitialized } = useSelector((state: RootState) => state.cats) as CatsState;
+  const { 
+    items, 
+    favorites, 
+    loading, 
+    error, 
+    isInitialized,
+    currentPage,
+    itemsPerPage 
+  } = useSelector((state: RootState) => state.cats) as CatsState;
+  
   const [showFavorites, setShowFavorites] = useState(false);
   const router = useRouter();
-  const catsToShow = showFavorites ? favorites: items;
+  const catsToShow = showFavorites ? favorites : items;
 
   useEffect(() => {
     if (!isInitialized) {
@@ -37,6 +52,15 @@ export default function ProductsPage() {
   const handleDelete = (catId: string) => {
     dispatch(deleteCat(catId));
   };
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    dispatch(setCurrentPage(value));
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedCats = catsToShow.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(catsToShow.length / itemsPerPage);
 
   if (loading) {
     return (
@@ -60,23 +84,25 @@ export default function ProductsPage() {
         Каталог котов
       </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3, gap: 2 }}>
-        <Button 
-          variant="contained" 
-          onClick={() => router.push('/create-product')}
-          sx={{ bgcolor: 'grey.500', '&:hover': { bgcolor: 'grey.400' } }}
-        >
-          Добавить
-        </Button>
-        <Button 
-          variant="contained" 
-          onClick={() => setShowFavorites(!showFavorites)}
-          sx={{ bgcolor: 'grey.500', '&:hover': { bgcolor: 'grey.400' } }}
-        >
-          {showFavorites ? 'Все коты' : 'Избранные коты'}
-        </Button>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          <Button 
+            variant="contained" 
+            onClick={() => router.push('/create-product')}
+            sx={{ bgcolor: 'grey.500', '&:hover': { bgcolor: 'grey.400' } }}
+          >
+            Добавить
+          </Button>
+          <Button 
+            variant="contained" 
+            onClick={() => setShowFavorites(!showFavorites)}
+            sx={{ bgcolor: 'grey.500', '&:hover': { bgcolor: 'grey.400' } }}
+          >
+            {showFavorites ? 'Все коты' : 'Избранные коты'}
+          </Button>
+        </Box>
       </Box>
       <Grid container spacing={4}>
-        {catsToShow.map((cat) => (
+        {paginatedCats.map((cat) => (
           <Box key={cat.id} sx={{ width: '100%', margin: '0 auto' }} onClick={() => router.push(`/products/${cat.id}`)}>
             <Card sx={{ display: 'flex' }}>
               <CardMedia
@@ -100,15 +126,24 @@ export default function ProductsPage() {
                     Высота: {cat.height}
                   </Typography>
                 </Box>
-                <Box mt="auto" display="flex" justifyContent="flex-end" gap={1}>
-                   <LikeButton catItem={cat} />
-                  <DeleteButton catId={cat.id} onDelete={handleDelete}/>
+                <Box sx={{ mt: 'auto', display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
+                  <LikeButton catId={cat.id} />
+                  <DeleteButton catId={cat.id} onDelete={handleDelete} />
                 </Box>
               </CardContent>
             </Card>
           </Box>
         ))}
       </Grid>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        <Pagination 
+          count={totalPages} 
+          page={currentPage} 
+          onChange={handlePageChange}
+          // color="primary"
+          size="large"
+        />
+      </Box>
     </Container>
   );
 } 

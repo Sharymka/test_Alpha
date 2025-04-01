@@ -37,12 +37,20 @@ export const CatForm: React.FC<CatFormProps> = ({
   });
   
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [id, setId] = useState(initialData?.id || "");
 
   useEffect(() => {
     if (initialData) {
       setFormData(initialData);
     }
   }, [initialData]);
+
+ 
+useEffect(() => {
+  if (!initialData) {
+    setId(Date.now().toString());
+  }
+}, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -86,7 +94,7 @@ export const CatForm: React.FC<CatFormProps> = ({
     }
     
     const catData: Cat = {
-      id: initialData?.id || '',
+      id: id,
       url: formData.imageUrl,
       width: Number(formData.width),
       height: Number(formData.height),
@@ -97,7 +105,7 @@ export const CatForm: React.FC<CatFormProps> = ({
         temperament: formData.temperament.split(' '),
       }],
     };
-    
+
     onSubmit(catData);
   };
 

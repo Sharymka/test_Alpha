@@ -21,4 +21,6 @@ export interface CatsState {
   loading: boolean;
   error: string | null;
   isInitialized: boolean;
+  currentPage: number;
+  itemsPerPage: number;
 }

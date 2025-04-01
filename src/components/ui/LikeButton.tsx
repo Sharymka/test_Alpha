@@ -3,23 +3,22 @@ import { IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleFavorites } from '@/store/features/cats/catsSlice';
-import type { Cat } from '@/types';
+import { toggleFavorite } from '@/store/features/cats/catsSlice';
 import type { RootState } from '@/store';
 
 interface LikeButtonProps {
-  catItem: Cat;
+  catId: string;
 }
 
-export const LikeButton: React.FC<LikeButtonProps> = ({ catItem }) => {
+export const LikeButton: React.FC<LikeButtonProps> = ({ catId }) => {
   const dispatch = useDispatch();
   const isLiked = useSelector((state: RootState) => 
-    state.cats.favorites.some(favorite => favorite.id === catItem.id)
+    state.cats.favorites.some(favorite => favorite.id === catId)
   );
 
   const handleLike = (event: React.MouseEvent) => {
     event.stopPropagation();
-    dispatch(toggleFavorites(catItem));
+    dispatch(toggleFavorite(catId));
   };
 
   return (

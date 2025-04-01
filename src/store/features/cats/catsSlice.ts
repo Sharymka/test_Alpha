@@ -1,46 +1,75 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { CatsState } from '@/types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { Cat } from '@/types';
 import { fetchCats } from './catsApi';
+
+interface CatsState {
+  items: Cat[];
+  favorites: Cat[];
+  loading: boolean;
+  error: string | null;
+  isInitialized: boolean;
+  currentPage: number;
+  itemsPerPage: number;
+}
 
 const initialState: CatsState = {
   items: [],
   favorites: [],
   loading: false,
   error: null,
-  isInitialized: false
+  isInitialized: false,
+  currentPage: 1,
+  itemsPerPage: 4
 };
 
-export const catsSlice = createSlice({
+const catsSlice = createSlice({
   name: 'cats',
   initialState,
   reducers: {
-    addCat: (state, action) => {
-      state.items.push(action.payload);
+    setCats: (state, action: PayloadAction<Cat[]>) => {
+      state.items = action.payload;
+      state.isInitialized = true;
     },
-    deleteCat: (state, action) => {
-      state.items = state.items.filter(cat => cat.id !== action.payload);
+    addCat: (state, action: PayloadAction<Cat>) => {
+      state.items.unshift(action.payload);
     },
-    toggleFavorites: (state, action) => {
-      const cat = action.payload;
-
-      const isFavorites = state.favorites.some((favorite) => cat.id === favorite.id);
-
-      if (isFavorites) {
-        state.favorites = state.favorites.filter((favorite) => favorite.id !== cat.id);
-      } else {
-        state.favorites.push(cat);
-      }
-    },
-    updateCat: (state, action) => {
+    updateCat: (state, action: PayloadAction<Cat>) => {
       const index = state.items.findIndex(cat => cat.id === action.payload.id);
       if (index !== -1) {
         state.items[index] = action.payload;
-        const favIndex = state.favorites.findIndex(cat => cat.id === action.payload.id);
-        if (favIndex !== -1) {
-          state.favorites[favIndex] = action.payload;
+      }
+      const favIndex = state.favorites.findIndex(cat => cat.id === action.payload.id);
+      if (favIndex !== -1) {
+        state.favorites[favIndex] = action.payload;
+      }
+    },
+    deleteCat: (state, action: PayloadAction<string>) => {
+      state.items = state.items.filter(cat => cat.id !== action.payload);
+      state.favorites = state.favorites.filter(cat => cat.id !== action.payload);
+    },
+    toggleFavorite: (state, action: PayloadAction<string>) => {
+      const cat = state.items.find(cat => cat.id === action.payload);
+      if (cat) {
+        const isFavorite = state.favorites.some(fav => fav.id === action.payload);
+        if (isFavorite) {
+          state.favorites = state.favorites.filter(fav => fav.id !== action.payload);
+        } else {
+          state.favorites.push(cat);
         }
       }
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    },
+    setItemsPerPage: (state, action: PayloadAction<number>) => {
+      state.itemsPerPage = action.payload;
+    }
   },
 
   extraReducers: (builder) => {
@@ -61,5 +90,16 @@ export const catsSlice = createSlice({
   }
 });
 
-export const { addCat, deleteCat, toggleFavorites, updateCat } = catsSlice.actions;
+export const { 
+  setCats, 
+  addCat, 
+  updateCat, 
+  deleteCat, 
+  toggleFavorite,
+  setLoading,
+  setError,
+  setCurrentPage,
+  setItemsPerPage
+} = catsSlice.actions;
+
 export default catsSlice.reducer; 
