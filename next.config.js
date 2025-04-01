@@ -4,17 +4,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: process.env.NODE_ENV === 'production' ? '/test_Alpha' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/test_Alpha/' : '',
+  basePath: process.env.PAGES_BASE_PATH,
+  assetPrefix: process.env.PAGES_BASE_PATH,
   trailingSlash: true,
 }
 
-module.exports = nextConfig
-
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {
-//   output: "export",  // <=== enables static exports
-//   reactStrictMode: true,
-// };
-
-// module.exports = nextConfig;
+export default nextConfig;
