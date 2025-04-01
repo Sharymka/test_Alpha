@@ -19,12 +19,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
+          cache: 'npm'
       
       - name: Install dependencies
         run: npm ci
       
       - name: Build
         run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /test_Alpha
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
