@@ -40,6 +40,7 @@ jobs:
         env:
           NODE_ENV: production
           PUBLIC_BASE_PATH: ${{ steps.setup_pages.outputs.base_path }}
+          CAT_API_KEY: ${{ secrets.NEXT_PUBLIC_CAT_API_KEY }}
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
