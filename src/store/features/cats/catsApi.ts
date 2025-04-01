@@ -5,7 +5,7 @@ const API_KEY = process.env.NEXT_PUBLIC_CAT_API_KEY
 const API_URL = 'https://api.thecatapi.com/v1/images/search?has_breeds=1&limit=10';
 
 if (!API_KEY) {
-  throw new Error('CAT_API_KEY is not defined in environment variables');
+  throw new Error('NEXT_PUBLIC_CAT_API_KEY is not defined in environment variables');
 }
 
 export const fetchCats = createAsyncThunk(
