@@ -2,6 +2,7 @@ export interface CatBreed {
   name: string;
   origin: string;
   description: string;
+  temperament: string[];
 }
 
 
@@ -10,7 +11,6 @@ export interface Cat {
   url: string;
   width: number;
   height: number;
-  temperament: string[];
   breeds: CatBreed[];
   isFavorite?: boolean;
 }

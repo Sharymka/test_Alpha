@@ -35,7 +35,6 @@ export const catsSlice = createSlice({
       const index = state.items.findIndex(cat => cat.id === action.payload.id);
       if (index !== -1) {
         state.items[index] = action.payload;
-        // Обновляем кота и в избранном, если он там есть
         const favIndex = state.favorites.findIndex(cat => cat.id === action.payload.id);
         if (favIndex !== -1) {
           state.favorites[favIndex] = action.payload;

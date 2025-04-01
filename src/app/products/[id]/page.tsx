@@ -29,11 +29,19 @@ export default function CatDetailsPage() {
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
-       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3, gap: 2 }}>
         <Button 
-              variant="contained" 
-              onClick={() => router.back()} 
-              sx={{ bgcolor: 'grey.500', '&:hover': { bgcolor: 'grey.400' } }}>
+          variant="contained" 
+          onClick={() => router.push(`/products/${id}/edit`)}
+          sx={{ bgcolor: 'grey.500', '&:hover': { bgcolor: 'grey.400' } }}
+        >
+          Редактировать
+        </Button>
+        <Button 
+          variant="contained" 
+          onClick={() => router.back()} 
+          sx={{ bgcolor: 'grey.500', '&:hover': { bgcolor: 'grey.400' } }}
+        >
           Назад
         </Button>
       </Box>
