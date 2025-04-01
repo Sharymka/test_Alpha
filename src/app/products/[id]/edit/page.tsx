@@ -10,9 +10,9 @@ import type { Cat } from '@/types';
 import { CatForm } from '@/components/CatForm';
 
 export default function EditCatPage() {
+  const router = useRouter();
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
   // const [isClient, setIsClient] = useState(false);
   
   const cat = useSelector((state: RootState) => 
@@ -37,8 +37,8 @@ export default function EditCatPage() {
     id: cat.id
   } : undefined;
 
-  const handleSubmit = (cat: Cat) => {
-    dispatch(updateCat(cat));
+  const handleSubmit = (catData: any) => {
+    dispatch(updateCat({ id: id as string, ...catData }));
     router.push('/products');
   };
 
@@ -79,4 +79,10 @@ export default function EditCatPage() {
       />
     </Container>
   );
+}
+
+export async function generateStaticParams() {
+  // В реальном приложении здесь нужно получить список всех котов
+  // Для демонстрации возвращаем пустой массив
+  return [];
 } 
