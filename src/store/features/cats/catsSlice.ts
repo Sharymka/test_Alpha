@@ -30,7 +30,18 @@ export const catsSlice = createSlice({
       } else {
         state.favorites.push(cat);
       }
-    }
+    },
+    updateCat: (state, action) => {
+      const index = state.items.findIndex(cat => cat.id === action.payload.id);
+      if (index !== -1) {
+        state.items[index] = action.payload;
+        // Обновляем кота и в избранном, если он там есть
+        const favIndex = state.favorites.findIndex(cat => cat.id === action.payload.id);
+        if (favIndex !== -1) {
+          state.favorites[favIndex] = action.payload;
+        }
+      }
+    },
   },
 
   extraReducers: (builder) => {
@@ -51,5 +62,5 @@ export const catsSlice = createSlice({
   }
 });
 
-export const { addCat, deleteCat, toggleFavorites } = catsSlice.actions;
+export const { addCat, deleteCat, toggleFavorites, updateCat } = catsSlice.actions;
 export default catsSlice.reducer; 
