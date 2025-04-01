@@ -1,14 +1,11 @@
-'use client';
+export async function generateStaticParams() {
+  // В реальном приложении здесь нужно получить список всех котов
+  // Для демонстрации возвращаем пустой массив
+  return []
+}
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import HomePage from './HomePage';
 
-export default function Home() {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.push('/products');
-  }, [router]);
-
-  return null;
+export default function HomePageWrapper({ params }: { params: { id: string } }) {
+  return <HomePage />;
 }
