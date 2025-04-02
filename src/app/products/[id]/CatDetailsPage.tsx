@@ -69,12 +69,6 @@ export function CatDetailsPage() {
           <Typography variant="body2">
             <strong>Происхождение:</strong> {cat.breeds[0]?.origin || 'Неизвестно'}
           </Typography>
-          <IconButton
-            onClick={() => dispatch(toggleFavorite(cat.id))}
-            color="primary"
-          >
-            {cat.isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-          </IconButton>
         </CardContent>
       </Card>
     </Container>

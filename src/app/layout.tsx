@@ -9,8 +9,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <ReduxProvider>
+      <body suppressHydrationWarning={true}>
+        <ReduxProvider >
           {children}
         </ReduxProvider>
       </body>

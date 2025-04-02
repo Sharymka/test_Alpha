@@ -5,13 +5,13 @@ export const validateForm = (formData: FormData): ValidationErrors => {
   
   if (!formData.name) {
     newErrors.name = 'Название породы обязательно';
-  } else if (!/^[а-яА-Яa-zA-Z]{2,}$/.test(formData.name)) {
+  } else if (!/^[а-яА-Яa-zA-Z][а-яА-Яa-zA-Z\s-]{2,}$/.test(formData.name)) {
     newErrors.name = 'Название должно содержать только буквы и быть длиннее 2 символов';
   }
 
   if (!formData.origin) {
     newErrors.origin = 'Происхождение обязательно';
-  } else if (!/^[а-яА-Яa-zA-Z]{2,}$/.test(formData.origin)) {
+  } else if (!/^[а-яА-Яa-zA-Z][а-яА-Яa-zA-Z\s-]{2,}$/.test(formData.origin)) {
     newErrors.origin = 'Происхождение должно содержать только буквы и быть длиннее 2 символов';
   }
 

@@ -1,10 +1,8 @@
-export async function generateStaticParams() {
-  // В реальном приложении здесь нужно получить список всех котов
-  // Для демонстрации возвращаем пустой массив
-  return [{id: "1"}];
-} 
-
 import { EditCatPage } from './EditCatPage';
+
+export async function generateStaticParams() {
+  return [{id: "1"}];
+}
 
 export default function EditCatPageWrapper({ params }: { params: { id: string } }) {
   return <EditCatPage />;

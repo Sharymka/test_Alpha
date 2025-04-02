@@ -103,36 +103,47 @@ export function ProductsPage() {
       </Box>
       <Grid container spacing={4}>
         {paginatedCats.map((cat) => (
-          <Box key={cat.id} sx={{ width: '100%', margin: '0 auto' }} onClick={() => router.push(`/products/${cat.id}`)}>
-            <Card sx={{ display: 'flex' }}>
-              <CardMedia
-                component="img"
-                sx={{ width: 300, height: 300, objectFit: 'cover' }}
-                image={cat.url}
-                alt={cat.breeds[0]?.name || 'Cat'}
-              />
-              <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <Typography variant="h5" component="h2" gutterBottom>
-                  {cat.breeds[0]?.name || 'Unknown Breed'}
-                </Typography>
-                <Typography variant="body1" color="text.secondary">
-                  Происхождение: {cat.breeds[0]?.origin || 'Unknown'}
-                </Typography>
-                <Box mt={2}>
-                  <Typography variant="body2">
-                    Длина: {cat.width}
+          <Grid item xs={12} key={cat.id}>
+            <Box 
+              onClick={() => router.push(`/products/${cat.id}`)}
+              sx={{ 
+                cursor: 'pointer',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  transition: 'transform 0.2s ease-in-out'
+                }
+              }}
+            >
+              <Card sx={{ display: 'flex' }}>
+                <CardMedia
+                  component="img"
+                  sx={{ width: 300, height: 300, objectFit: 'cover' }}
+                  image={cat.url}
+                  alt={cat.breeds[0]?.name || 'Cat'}
+                />
+                <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <Typography variant="h5" component="h2" gutterBottom>
+                    {cat.breeds[0]?.name || 'Unknown Breed'}
                   </Typography>
-                  <Typography variant="body2">
-                    Высота: {cat.height}
+                  <Typography variant="body1" color="text.secondary">
+                    Происхождение: {cat.breeds[0]?.origin || 'Unknown'}
                   </Typography>
-                </Box>
-                <Box sx={{ mt: 'auto', display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
-                  <LikeButton catId={cat.id} />
-                  <DeleteButton catId={cat.id} onDelete={handleDelete} />
-                </Box>
-              </CardContent>
-            </Card>
-          </Box>
+                  <Box mt={2}>
+                    <Typography variant="body2">
+                      Длина: {cat.width}
+                    </Typography>
+                    <Typography variant="body2">
+                      Высота: {cat.height}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ mt: 'auto', display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
+                    <LikeButton catId={cat.id} />
+                    <DeleteButton catId={cat.id} onDelete={handleDelete} />
+                  </Box>
+                </CardContent>
+              </Card>
+            </Box>
+          </Grid>
         ))}
       </Grid>
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
