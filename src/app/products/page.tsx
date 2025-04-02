@@ -1,11 +1,7 @@
-export async function generateStaticParams() {
-  // В реальном приложении здесь нужно получить список всех котов
-  // Для демонстрации возвращаем пустой массив
-  return [{id: "1"}]
-}
-
+import { getCats } from '@/utils/cats';
 import { ProductsPage } from './ProductsPage';
 
-export default function ProductsPageWrapper({ params }: { params: { id: string } }) {
-  return <ProductsPage />;
+export default async function ProductsPageWrapper() {
+  const cats = await getCats();
+  return <ProductsPage initialCats={cats} />;
 }

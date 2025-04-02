@@ -22,18 +22,18 @@ import {
 import type { RootState, AppDispatch } from '@/store';
 import type { Cat, CatsState } from '@/types';
 import { fetchCats } from '@/store/features/cats/catsApi';
-import { deleteCat, setCurrentPage, setItemsPerPage } from '@/store/features/cats/catsSlice';
+import { deleteCat, setCurrentPage, setItemsPerPage, setCats } from '@/store/features/cats/catsSlice';
 import { LikeButton } from '@/components/ui/LikeButton';
 import { DeleteButton } from '@/components/ui/DeleteButton';
 import { useRouter } from 'next/navigation';
 
-export function ProductsPage() {
+export function ProductsPage({ initialCats }: {initialCats: Cat[]}) {
   const dispatch = useDispatch<AppDispatch>();
   const { 
     items, 
     favorites, 
     loading, 
-    error, 
+    error,
     isInitialized,
     currentPage,
     itemsPerPage 
@@ -41,11 +41,14 @@ export function ProductsPage() {
   
   const [showFavorites, setShowFavorites] = useState(false);
   const router = useRouter();
-  const catsToShow = showFavorites ? favorites : items;
+ 
+  const cats = isInitialized ? items: initialCats;
+  const catsToShow = showFavorites ? favorites : cats;
 
   useEffect(() => {
     if (!isInitialized) {
-      dispatch(fetchCats());
+      dispatch(setCats(initialCats));
+      // dispatch(fetchCats());
     }
   }, [dispatch, isInitialized]);
 

@@ -2,15 +2,14 @@
 
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Container, Typography, Box, Button } from '@mui/material';
 import { updateCat } from '@/store/features/cats/catsSlice';
 import type { AppDispatch, RootState } from '@/store';
 import { CatForm } from '@/components/CatForm';
 
-export function EditCatPage() {
+export function EditCatPage({ id }: { id: string }) {
   const router = useRouter();
-  const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   
   const cat = useSelector((state: RootState) => 
@@ -32,7 +31,22 @@ export function EditCatPage() {
   } : undefined;
 
   const handleSubmit = (catData: any) => {
-    dispatch(updateCat({ id: id as string, ...catData }));
+    if (!cat) return;
+
+    dispatch(updateCat({
+      ...cat, 
+      id: catData.id, 
+      url: catData.url, 
+      width: catData.width, 
+      height: catData.height, 
+      breeds: [{
+        ...cat.breeds[0], 
+        name: catData.breeds[0].name,
+        origin: catData.breeds[0].origin,
+        temperament: catData.breeds[0].temperament,
+        description: catData.breeds[0].description
+      }]
+    }));
     router.push('/products');
   };
 

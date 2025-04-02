@@ -36,11 +36,11 @@ const catsSlice = createSlice({
     updateCat: (state, action: PayloadAction<Cat>) => {
       const index = state.items.findIndex(cat => cat.id === action.payload.id);
       if (index !== -1) {
-        state.items[index] = action.payload;
+        state.items[index] = {...action.payload};
       }
       const favIndex = state.favorites.findIndex(cat => cat.id === action.payload.id);
       if (favIndex !== -1) {
-        state.favorites[favIndex] = action.payload;
+        state.favorites[favIndex] = {...action.payload};
       }
     },
     deleteCat: (state, action: PayloadAction<string>) => {

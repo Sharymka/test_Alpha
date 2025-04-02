@@ -11,8 +11,11 @@ import type { RootState } from '@/store';
 import { toggleFavorite } from '@/store/features/cats/catsSlice';
 import type { Cat } from '@/types';
 
-export function CatDetailsPage() {
-  const { id } = useParams();
+interface CatDetailsPageProps {
+  id: string;
+}
+
+export function CatDetailsPage({ id }: CatDetailsPageProps) {
   const router = useRouter();
   const dispatch = useDispatch();
   const { items } = useSelector((state: RootState) => state.cats);
