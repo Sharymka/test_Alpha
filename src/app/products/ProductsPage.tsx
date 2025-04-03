@@ -100,7 +100,7 @@ export function ProductsPage({ initialCats }: {initialCats: Cat[]}) {
             onClick={() => setShowFavorites(!showFavorites)}
             sx={{ bgcolor: 'grey.500', '&:hover': { bgcolor: 'grey.400' } }}
           >
-            {showFavorites ? 'Все коты' : 'Избранные коты'}
+            {showFavorites ? 'Все котики' : 'Избранные коты'}
           </Button>
         </Box>
       </Box>
