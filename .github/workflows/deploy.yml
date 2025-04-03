@@ -33,6 +33,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: out
+    env:
+      NEXT_PUBLIC_CAT_API_KEY: ${{ secrets.NEXT_PUBLIC_CAT_API_KEY }}
 
   deploy:
     needs: build
