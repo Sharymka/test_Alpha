@@ -19,7 +19,7 @@ const initialState: CatsState = {
   error: null,
   isInitialized: false,
   currentPage: 1,
-  itemsPerPage: 4
+  itemsPerPage: 10
 };
 
 const catsSlice = createSlice({
@@ -36,16 +36,12 @@ const catsSlice = createSlice({
     updateCat: (state, action: PayloadAction<Cat>) => {
       const index = state.items.findIndex(cat => cat.id === action.payload.id);
       if (index !== -1) {
-        state.items[index] = {...action.payload};
-      }
-      const favIndex = state.favorites.findIndex(cat => cat.id === action.payload.id);
-      if (favIndex !== -1) {
-        state.favorites[favIndex] = {...action.payload};
+        state.items[index] = action.payload;
       }
     },
     deleteCat: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter(cat => cat.id !== action.payload);
-      state.favorites = state.favorites.filter(cat => cat.id !== action.payload);
+      state.favorites = state.favorites.filter(fav => fav.id !== action.payload);
     },
     toggleFavorite: (state, action: PayloadAction<string>) => {
       const cat = state.items.find(cat => cat.id === action.payload);
