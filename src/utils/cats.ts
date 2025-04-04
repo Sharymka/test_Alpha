@@ -1,7 +1,9 @@
+'use server';
+
 import { cache } from 'react';
 import type { Cat } from '@/types';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 export const getCats = cache(async () => {
   const cacheFile = path.join(process.cwd(), 'cats-cache.json');

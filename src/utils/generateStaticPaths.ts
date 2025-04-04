@@ -15,7 +15,7 @@ export function getNextAvailableId(): string {
 }
 
 export async function generateStaticPaths() {
-  const existingCats = await getCats();;
+  const existingCats = await getCats();
   
   const paths = [
     ...existingCats.map((cat: Cat) => ({ id: cat.id })),
