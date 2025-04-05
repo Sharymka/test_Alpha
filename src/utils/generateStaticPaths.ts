@@ -1,7 +1,7 @@
 import { getCats } from './cats';
 import type { Cat } from '@/types';
 
-const RESERVED_IDS = Array.from({ length: 50 }, (_, i) => `reserved-${i + 1}`);
+const RESERVED_IDS = Array.from({ length: 50 }, (_, i) => `reserved-${i + 26}`);
 
 let usedReservedIds: string[] = [];
 
