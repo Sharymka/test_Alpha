@@ -21,7 +21,6 @@ export async function generateStaticPaths() {
     ...existingCats.map((cat: Cat) => ({ id: cat.id })),
     ...RESERVED_IDS.map(id => ({ id }))
   ];
-  console.log('paths', paths);
 
   return paths;
 } 
