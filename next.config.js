@@ -7,7 +7,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  assetPrefix: process.env.PAGES_BASE_PATH,
   trailingSlash: true,
 }
 
